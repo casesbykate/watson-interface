@@ -1,0 +1,262 @@
+/*
+https://github.com/Hanul/sky-css-base
+v0.0.1 | 20210109
+Author: Sim Young Jae
+License: MIT
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+*,
+*:focus {
+  outline: 0;
+}
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+a,
+button,
+input[type=button],
+input[type=submit],
+input[type=reset] {
+  cursor: pointer;
+}
+button,
+input {
+  border: none;
+}
+[hidden] {
+  display: none !important;
+}
+[contenteditable] {
+  -webkit-tap-highlight-color: transparent;
+}
+.float-wrapper:after {
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+@font-face {
+  font-family: 'NeoDunggeunmo';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  font-family: 'NeoDunggeunmo';
+  background: #000;
+  display: flex;
+  margin: auto;
+}
+.home-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 16px;
+  color: white;
+  line-height: 2;
+}
+.home-view > .home-container {
+  display: flex;
+  flex-direction: row;
+}
+.home-view > .home-container > img {
+  width: 50%;
+}
+.home-view > .home-container > .logo-container > .user-info > .connect-wallet,
+.home-view > .home-container > .logo-container > .user-info > .wallet-address {
+  color: #fc0505;
+}
+.home-view > .home-container > .logo-container > .footer {
+  text-align: right;
+}
+.home-view > .dialogue > .container > .name {
+  color: #00F8C9;
+}
+.home-view > .dialogue > .container > .help {
+  color: #F7ED00;
+}
+.home-view > .dialogue > .danger {
+  color: #fc0505;
+}
+.help-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 16px;
+  color: white;
+  line-height: 2;
+}
+.help-view > .container > .name {
+  color: #00F8C9;
+}
+.help-view > .container > .help {
+  color: #F7ED00;
+}
+.help-view > .container > .danger {
+  color: #fc0505;
+}
+.command-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 16px;
+  color: white;
+  line-height: 2;
+}
+.command-view > .container > .name {
+  color: #00F8C9;
+}
+.command-view > .container > .help {
+  color: #F7ED00;
+}
+.command-view > .container > .danger {
+  color: #fc0505;
+}
+.inventory-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 16px;
+  color: white;
+  line-height: 3;
+}
+.inventory-view > .container > .name {
+  color: #00F8C9;
+}
+.inventory-view > .container > .help {
+  color: #F7ED00;
+}
+.inventory-view > .container > .danger {
+  color: #fc0505;
+}
+

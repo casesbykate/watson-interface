@@ -1,0 +1,52 @@
+.home-view {
+    display       : flex;
+    flex-direction: column;
+    width         : 100%;
+    padding       : 16px;
+    color         : white;
+    line-height   : 2;
+
+    >.home-container {
+        display       : flex;
+        flex-direction: row;
+
+        >img {
+            width: 50%;
+        }
+
+        >.logo-container {
+            >.user-info {
+
+                >.connect-wallet,
+                >.wallet-address {
+                    color: @danger;
+                }
+            }
+
+            >.footer {
+                text-align: right;
+            }
+        }
+    }
+
+    >.dialogue {
+
+        >.container {
+            >.name {
+                color: @name;
+            }
+
+            >.help {
+                color: @help;
+            }
+        }
+
+        >.danger {
+            color: @danger;
+        }
+    }
+}
+
+@media @phone {
+    .home-view {}
+}
