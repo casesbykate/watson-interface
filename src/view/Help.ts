@@ -7,16 +7,16 @@ export default class Help implements View {
     private interval: any;
 
     constructor() {
-        this.container = el(".help-view", el(".container", el("span.name", "ARVITOR"), ":사무소# ", el("span.help", "도움말") ), 
-        el("img", { src: "images/help.svg", height: '500px' }), 
-        el(".container", "~ Cases By Kate", el("span.help", " 도움말 ", ), "및 명령어 모음입니다."),
-        el("div", `~ 
+        this.container = el(".help-view", el(".container", el("span.name", "ARVITOR"), ":사무소# ", el("span.help", "도움말")),
+            el("img", { src: "images/help.svg", height: '500px' }),
+            el(".container", "~ Cases By Kate", el("span.help", " 도움말 ",), "및 명령어 모음입니다."),
+            el("div", `~ 
         ~ 1. 추리 시뮬레이션 방법
         ~
         ~ 명령어 입력을 통해 추리 시뮬레이션을 진행하실 수 있습니다.
         ~ 케이스의 특성을 분해해서 단서로 만들 수 있습니다.`),
-        el(".container", "~ 특정 ", el("span.danger", "용의자"), "에 해당하는 단서를 모아서 제출하면, ", el("span.danger", "용의자"), "를 검거하여 NFT로 보상받을 수 있습니다."),
-        el("div", `
+            el(".container", "~ 특정 ", el("span.danger", "용의자"), "에 해당하는 단서를 모아서 제출하면, ", el("span.danger", "용의자"), "를 검거하여 NFT로 보상받을 수 있습니다."),
+            el("div", `
         ~
 ~ 2. 사무소 이용 명령어
 ~
@@ -40,12 +40,12 @@ export default class Help implements View {
 ~     ㄴ 정보 : 카드 정보 조회
 ~     ㄴ 분해 : 쪼개기(카드 -> 단서)
         `),
-        el('.container', el("span.name", "ARVITOR"), ":사무소# 명단", `
+            el('.container', el("span.name", "ARVITOR"), ":사무소# 명단", `
         [Watson] 몇 페이지를 보길 원해? 
 ~ 페이지 [페이지 번호]로 입력해주세요. 명렁어 예 : 페이지 1
         `),
-        el(".container", el("span.name", "ARVITOR:"), "사무소# 페이지 2"),
-        el("div", "[Watson] 명단은 지금 1 페이지까지 밖에 없어.")
+            el(".container", el("span.name", "ARVITOR:"), "사무소# 페이지 2"),
+            el("div", "[Watson] 명단은 지금 1 페이지까지 밖에 없어.")
         ).appendTo(BodyNode);
     }
 

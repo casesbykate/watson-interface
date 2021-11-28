@@ -7,11 +7,14 @@ export default class Command implements View {
     private interval: any;
 
     constructor() {
-        this.container = el(".command-view", 
-        el(".container", el("span.name", "ARVITOR"), ":사무소# 명단 1"), 
-        el("img", { src: "images/books.svg", height: "300px" }), el("div", `
+        this.container = el(".command-view",
+            el(".container", el("span.name", "ARVITOR"), ":사무소# 명단 1"),
+            el("img", { src: "images/books.svg", height: "300px" }), el("div", `
 ~ < 용의자 명단 (1/1) > # 전부 검거 완료되면, 명단에서 사라짐
-~ (1) 검은 안경 낀 사내 (1/8)~ (2) 성가신 노숙자 (13/291)# 생략했습니다.~ (77) 분노 조절 장애 수트맨 (299/300) 
+~ (1) 검은 안경 낀 사내 (1/8)
+~ (2) 성가신 노숙자 (13/291)
+# 생략했습니다.
+~ (77) 분노 조절 장애 수트맨 (299/300) 
 [Watson] 이 중에 짐작가는 사람 있어?
 ~ 용의자를 추적하려면, ‘명단 [명단 페이지 번호] 추적 [용의자 번호]'를 입력하세요. 명령어 예시 : 명단 1 추적 1ARVITOR:사무소# 명단 추적 1
 [Watson] 무슨 말이야?
