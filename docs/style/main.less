@@ -1,19 +1,13 @@
-@import "base.less";
-@import "palette.less";
+@import "xterm.css";
 @import "font.less";
 
 body {
-    font-family: 'NeoDunggeunmo';
-    background : @background;
-    display    : flex;
-    margin     : auto;
+    background: #2D2E2C;
+    padding   : 10px 0 10px 10px;
+    margin    : 0;
 }
 
-// components
-@import "component/connectwalletpopup.less";
-
-// views
-@import "view/home.less";
-@import "view/help.less";
-@import "view/command.less";
-@import "view/inventory.less";
+.terminal {
+    width : 100%;
+    height: 100%;
+}
