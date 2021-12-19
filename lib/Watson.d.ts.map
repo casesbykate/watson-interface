@@ -1,1 +1,1 @@
-{"version":3,"file":"Watson.d.ts","sourceRoot":"","sources":["../src/Watson.ts"],"names":[],"mappings":"AACA,OAAO,YAAY,MAAM,gBAAgB,CAAC;AAQ1C,MAAM,CAAC,OAAO,OAAO,MAAO,SAAQ,YAAY;;CAe/C"}
+{"version":3,"file":"Watson.d.ts","sourceRoot":"","sources":["../src/Watson.ts"],"names":[],"mappings":"AACA,OAAO,YAAY,MAAM,gBAAgB,CAAC;AAU1C,MAAM,CAAC,OAAO,OAAO,MAAO,SAAQ,YAAY;IAE5C,OAAO,CAAC,KAAK,CAAoC;IACjD,OAAO,CAAC,cAAc,CAAS;;YAiCjB,WAAW;CAoB5B"}

@@ -7,6 +7,7 @@ export default abstract class BaseTerminal extends Terminal {
         welcomeMessage: string,
         commands: Commands,
         hiddenCommands: Commands,
+        input: (command: string) => boolean,
     ) {
         const newCommands = {
             도움말: {
@@ -19,6 +20,6 @@ export default abstract class BaseTerminal extends Terminal {
             },
             ...commands
         };
-        super(`${name} 부팅중...`, welcomeMessage, { ...newCommands, ...hiddenCommands });
+        super(`${name} 부팅중...`, welcomeMessage, { ...newCommands, ...hiddenCommands }, input);
     }
 }

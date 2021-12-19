@@ -23,6 +23,7 @@ export default abstract class Terminal extends DomNode {
         bootingMessage: string,
         private welcomeMessage: string,
         private commands: Commands,
+        private input: (command: string) => boolean,
     ) {
         super(".terminal");
         BodyNode.style({
@@ -76,7 +77,7 @@ export default abstract class Terminal extends DomNode {
                     this.term.writeln("");
                     if (command in this.commands) {
                         this.commands[command].run();
-                    } else {
+                    } else if (this.input(command) !== true) {
                         this.term.writeln(`${command}: 명령어를 찾을 수 없습니다.`);
                     }
                 }
@@ -96,6 +97,8 @@ export default abstract class Terminal extends DomNode {
 
         this.print(this.welcomeMessage);
         this.prompt();
+
+        this.fireEvent("boot");
     }
 
     public print(message: string) {
