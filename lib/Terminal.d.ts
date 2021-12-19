@@ -2,7 +2,7 @@ import { DomNode } from "@hanul/skynode";
 import { Terminal as XTerm } from "xterm";
 export interface Commands {
     [command: string]: {
-        run: () => void;
+        run: () => Promise<void> | void;
         description?: string;
     };
 }

@@ -1,6 +1,9 @@
-const TESTNET = false;
+const TESTNET = true;
 
 export default {
+
+    apiHost: TESTNET ? "localhost:9013" : "api.casesbykate.xyz",
+
     contracts: TESTNET ? {
         CasesByKate: "0x491cf9D55BC21A5e4821C00Cb12dC7D35C99bd86",
         CryptoCriminals77: "0xd5Dbf64080a33262fd55D1F32368456B588012a1",

@@ -1,5 +1,7 @@
 import SkyUtil from "skyutil";
+import superagent from "superagent";
 import BaseTerminal from "./BaseTerminal";
+import Config from "./Config";
 import ConstantMessages from "./ConstantMessages";
 import Wallet from "./klaytn/Wallet";
 import Store from "./Store";
@@ -22,6 +24,40 @@ export default class Watson extends BaseTerminal {
                     this.print("이름을 변경합니다. 이름을 입력하세요.");
                 },
                 description: "이름을 변경합니다.",
+            },
+            명단: {
+                run: async () => {
+                    this.print("명단을 불러오는 중입니다...");
+                    const results = (await superagent.get(`https://${Config.apiHost}/77cryptocriminals/all`)).body;
+                    this.print(ConstantMessages.list);
+                    this.print("< \x1b[31;1m용의자 명단\x1b[0m >");
+                    for (const result of results) {
+                        this.print(`(${result.id}) ${result.name} (${result.totalSupply}/${result.maxSupply})`);
+                    }
+                    this.print("\n[Watson] 이 중에 짐작가는 사람 있어?\n");
+                    this.print("\x1b[31;1m용의자\x1b[0m를 추적하려면, ‘추적 \x1b[31;1m[용의자 번호]\x1b[0m'를 입력하세요. 명령어 예시 : 추적 12");
+                },
+                description: "용의자들의 명단을 봅니다.",
+            },
+            "추적 [용의자 번호]": {
+                run: () => {
+                },
+                description: "[용의자 번호]에 해당하는 용의자를 추적합니다. ex) 추적 12",
+            },
+            케이스: {
+                run: () => {
+                },
+                description: "내가 소유한 케이스들을 봅니다.",
+            },
+            "케이스 [케이스 ID]": {
+                run: () => {
+                },
+                description: "[케이스 ID]에 해당하는 케이스의 정보를 봅니다. ex) 케이스 4823",
+            },
+            카드: {
+                run: () => {
+                },
+                description: "내가 소유한 카드들을 봅니다.",
             },
         }, {
             "안녕": { run: () => this.print(helloMessages[SkyUtil.random(0, helloMessages.length - 1)]) },

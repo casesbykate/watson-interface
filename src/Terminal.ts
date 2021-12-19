@@ -6,7 +6,7 @@ import baseTheme from "./baseTheme.json";
 
 export interface Commands {
     [command: string]: {
-        run: () => void,
+        run: () => Promise<void> | void,
         description?: string,
     },
 }
@@ -65,7 +65,7 @@ export default abstract class Terminal extends DomNode {
             }
         });
 
-        this.term.onData((c) => {
+        this.term.onData(async (c) => {
             if (c === "[15~") {
                 location.reload();
             } else if (c === "\u0003") {
@@ -76,7 +76,10 @@ export default abstract class Terminal extends DomNode {
                 if (command.length > 0) {
                     this.term.writeln("");
                     if (command in this.commands) {
-                        this.commands[command].run();
+                        const result = this.commands[command].run();
+                        if (result instanceof Promise) {
+                            await Promise.all([result]);
+                        }
                     } else if (this.input(command) !== true) {
                         this.term.writeln(`${command}: 명령어를 찾을 수 없습니다.`);
                     }

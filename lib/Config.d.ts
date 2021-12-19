@@ -1,4 +1,5 @@
 declare const _default: {
+    apiHost: string;
     contracts: {
         CasesByKate: string;
         CryptoCriminals77: string;
