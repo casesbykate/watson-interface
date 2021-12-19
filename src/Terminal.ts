@@ -6,7 +6,7 @@ import baseTheme from "./baseTheme.json";
 
 export interface Commands {
     [command: string]: {
-        run: () => Promise<void> | void,
+        run: (...params: string[]) => Promise<void> | void,
         description?: string,
     },
 }
@@ -23,7 +23,7 @@ export default abstract class Terminal extends DomNode {
         bootingMessage: string,
         private welcomeMessage: string,
         private commands: Commands,
-        private input: (command: string) => boolean,
+        private input: (...commands: string[]) => boolean,
     ) {
         super(".terminal");
         BodyNode.style({
@@ -72,15 +72,26 @@ export default abstract class Terminal extends DomNode {
                 this.term.write("^C");
                 this.prompt();
             } else if (c === "\r") {
-                const command = this.command.trim().split(" ")[0];
+                const commands = this.command.trim().split(" ");
+                const command = commands[0];
                 if (command.length > 0) {
                     this.term.writeln("");
-                    if (command in this.commands) {
-                        const result = this.commands[command].run();
+                    let cmd;
+                    for (const c of Object.keys(this.commands)) {
+                        if (
+                            (commands.length === 1 && c === command) ||
+                            (commands.length > 1 && c.indexOf(`${command} [`) === 0)
+                        ) {
+                            cmd = this.commands[c];
+                        }
+                    }
+                    if (cmd !== undefined) {
+                        commands.shift();
+                        const result = cmd.run(...commands);
                         if (result instanceof Promise) {
                             await Promise.all([result]);
                         }
-                    } else if (this.input(command) !== true) {
+                    } else if (this.input(...commands) !== true) {
                         this.term.writeln(`${command}: 명령어를 찾을 수 없습니다.`);
                     }
                 }

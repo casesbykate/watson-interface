@@ -10,4 +10,17 @@ export default abstract class KIP37Contract extends Contract {
     public async getTotalSupply(id: BigNumberish): Promise<BigNumber> {
         return BigNumber.from(await this.runMethod("totalSupply", id));
     }
+
+    public async balanceOf(owner: string, id: BigNumberish): Promise<BigNumber> {
+        return BigNumber.from(await this.runMethod("balanceOf", owner, id));
+    }
+
+    public async balanceOfBatch(owners: string[], ids: BigNumberish[]): Promise<BigNumber[]> {
+        const _results = await this.runMethod("balanceOfBatch", owners, ids);
+        const results: BigNumber[] = [];
+        for (const result of _results) {
+            results.push(BigNumber.from(result));
+        }
+        return results;
+    }
 }

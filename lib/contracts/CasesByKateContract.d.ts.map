@@ -1,1 +1,1 @@
-{"version":3,"file":"CasesByKateContract.d.ts","sourceRoot":"","sources":["../../src/contracts/CasesByKateContract.ts"],"names":[],"mappings":"AAEA,OAAO,QAAQ,MAAM,YAAY,CAAC;AAElC,cAAM,mBAAoB,SAAQ,QAAQ;;CAKzC;;AAED,wBAAyC"}
+{"version":3,"file":"CasesByKateContract.d.ts","sourceRoot":"","sources":["../../src/contracts/CasesByKateContract.ts"],"names":[],"mappings":"AAEA,OAAO,aAAa,MAAM,0BAA0B,CAAC;AAErD,cAAM,mBAAoB,SAAQ,aAAa;;CAK9C;;AAED,wBAAyC"}

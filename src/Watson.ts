@@ -3,6 +3,9 @@ import superagent from "superagent";
 import BaseTerminal from "./BaseTerminal";
 import Config from "./Config";
 import ConstantMessages from "./ConstantMessages";
+import CasesByKateContract from "./contracts/CasesByKateContract";
+import CryptoCriminals77Contract from "./contracts/CryptoCriminals77Contract";
+import database from "./database-v2.json";
 import Wallet from "./klaytn/Wallet";
 import Store from "./Store";
 
@@ -27,7 +30,7 @@ export default class Watson extends BaseTerminal {
             },
             명단: {
                 run: async () => {
-                    this.print("명단을 불러오는 중입니다...");
+                    this.print("명단을 불러오는 중입니다...\n");
                     const results = (await superagent.get(`https://${Config.apiHost}/77cryptocriminals/all`)).body;
                     this.print(ConstantMessages.list);
                     this.print("< \x1b[31;1m용의자 명단\x1b[0m >");
@@ -40,22 +43,87 @@ export default class Watson extends BaseTerminal {
                 description: "용의자들의 명단을 봅니다.",
             },
             "추적 [용의자 번호]": {
-                run: () => {
+                run: (cardId) => {
+
                 },
                 description: "[용의자 번호]에 해당하는 용의자를 추적합니다. ex) 추적 12",
             },
             케이스: {
-                run: () => {
+                run: async () => {
+                    this.print("케이스를 불러오는 중입니다...\n");
+                    const address = await Wallet.loadAddress();
+                    if (address !== undefined) {
+                        const balance = await CasesByKateContract.balanceOf(address);
+                        const ids: number[] = [];
+                        const promises: Promise<void>[] = [];
+                        for (let i = 0; i < balance.toNumber(); i += 1) {
+                            const promise = async (index: number) => {
+                                try {
+                                    const id = (await CasesByKateContract.tokenOfOwnerByIndex(address, index)).toNumber();
+                                    ids.push(id);
+                                } catch (e) {
+                                    console.error(e);
+                                }
+                            };
+                            promises.push(promise(i));
+                        }
+                        await Promise.all(promises);
+                        ids.sort((a, b) => a - b);
+                        this.print(ConstantMessages.inventory);
+                        this.print("< 보유한 케이스 목록 >\n");
+                        let message = "";
+                        for (const [index, id] of ids.entries()) {
+                            if (index > 0) {
+                                message += ", ";
+                            }
+                            message += `#${id}`;
+                        }
+                        this.print(message);
+                        this.print(`\n총 ${ids.length} 개의 케이스를 보유하고 있습니다.`);
+                    }
                 },
                 description: "내가 소유한 케이스들을 봅니다.",
             },
             "케이스 [케이스 ID]": {
-                run: () => {
+                run: (caseId) => {
+                    const _case = (database as any)[caseId];
+                    if (_case !== undefined) {
+                        this.print(`\n< CASE #${caseId} 정보 >\n`);
+                        this.print(_case.text);
+                    } else {
+                        this.print("[Watson] 그런 케이스는 없어.");
+                    }
                 },
                 description: "[케이스 ID]에 해당하는 케이스의 정보를 봅니다. ex) 케이스 4823",
             },
             카드: {
-                run: () => {
+                run: async () => {
+                    this.print("카드를 불러오는 중입니다...\n");
+                    const list = (await superagent.get(`https://${Config.apiHost}/77cryptocriminals/all`)).body;
+                    const address = await Wallet.loadAddress();
+                    if (address !== undefined) {
+                        const owners: string[] = [];
+                        const ids: number[] = [];
+                        SkyUtil.repeat(77, (index) => {
+                            owners.push(address);
+                            ids.push(index + 1);
+                        });
+                        const results = await CryptoCriminals77Contract.balanceOfBatch(owners, ids);
+
+                        this.print(ConstantMessages.inventory);
+                        this.print("< 보유한 카드 목록 >\n");
+
+                        let totalCount = 0;
+                        for (const [index, result] of results.entries()) {
+                            const count = result.toNumber();
+                            if (count > 0) {
+                                const data = list[index];
+                                this.print(`(${data.id}) ${data.name} (${count}개)`);
+                                totalCount += count;
+                            }
+                        }
+                        this.print(`\n총 ${totalCount} 개의 카드를 보유하고 있습니다.`);
+                    }
                 },
                 description: "내가 소유한 카드들을 봅니다.",
             },
@@ -69,7 +137,7 @@ export default class Watson extends BaseTerminal {
             "방가": { run: () => this.print("반갑습니다.") },
         }, (command) => {
             if (this.changeNameMode === true) {
-                this.store.set("username", command.trim());
+                this.store.set("username", command);
                 this.print("이름이 등록되었습니다.");
                 this.print(`\n\n[Watson] 안녕 \x1b[36;1m${this.store.get("username")}\x1b[0m, 어떤 걸 도와줄까? 뭘 해야할지 모르겠다면, \x1b[33;1m도움말\x1b[0m을 입력해.`);
                 this.print("명령어를 입력하세요. 도움말 또는 명령어를 보고 싶다면 \x1b[33;1m도움말\x1b[0m을 입력하세요.");
