@@ -8,6 +8,7 @@
         "@hanul/waiter": "^0.0.1",
         "@types/superagent": "^4.1.12",
         "@walletconnect/web3-provider": "^1.4.1",
+        "@types/uuid": "^8.3.0",
         "bowser": "^2.11.0",
         "ethers": "^5.0.32",
         "klip-sdk": "^2.0.1",
@@ -20,7 +21,8 @@
         "xterm": "^4.15.0",
         "xterm-addon-fit": "^0.5.0",
         "xterm-addon-unicode11": "^0.3.0",
-        "xterm-addon-webgl": "^0.11.3"
+        "xterm-addon-webgl": "^0.11.3",
+        "uuid": "^8.3.1"
     },
     "devDependencies": {
         "@types/qrcode": "^1.4.1",
