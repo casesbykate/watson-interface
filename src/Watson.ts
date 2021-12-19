@@ -1,3 +1,4 @@
+import { utils } from "ethers";
 import SkyUtil from "skyutil";
 import superagent from "superagent";
 import BaseTerminal from "./BaseTerminal";
@@ -5,6 +6,8 @@ import Config from "./Config";
 import ConstantMessages from "./ConstantMessages";
 import CasesByKateContract from "./contracts/CasesByKateContract";
 import CryptoCriminals77Contract from "./contracts/CryptoCriminals77Contract";
+import KlayswapContract from "./contracts/KlayswapContract";
+import MixContract from "./contracts/MixContract";
 import database from "./database-v2.json";
 import Wallet from "./klaytn/Wallet";
 import Store from "./Store";
@@ -18,6 +21,7 @@ export default class Watson extends BaseTerminal {
 
     private store: Store = new Store("watson-store");
     private changeNameMode = false;
+    private changeBuyMixMode = false;
 
     constructor() {
         super("Watson v1.0", ConstantMessages.welcome, {
@@ -127,6 +131,25 @@ export default class Watson extends BaseTerminal {
                 },
                 description: "내가 소유한 카드들을 봅니다.",
             },
+            "믹스": {
+                run: async () => {
+                    this.print("믹스 수량을 불러오는 중입니다...\n");
+                    const address = await Wallet.loadAddress();
+                    if (address !== undefined) {
+                        const mix = await MixContract.balanceOf(address);
+                        this.print("< 보유한 믹스 수량 >\n");
+                        this.print(`${utils.formatEther(mix)} MIX`);
+                    }
+                },
+                description: "내가 소유한 믹스 수량을 확인합니다.",
+            },
+            "믹스구매": {
+                run: () => {
+                    this.changeBuyMixMode = true;
+                    this.print("믹스를 구매합니다. 구매 수량을 입력하세요.");
+                },
+                description: "믹스를 구매합니다.",
+            },
         }, {
             "안녕": { run: () => this.print(helloMessages[SkyUtil.random(0, helloMessages.length - 1)]) },
             "안녕?": { run: () => this.print(helloMessages[SkyUtil.random(0, helloMessages.length - 1)]) },
@@ -135,14 +158,25 @@ export default class Watson extends BaseTerminal {
             "반가워": { run: () => this.print("반갑습니다.") },
             "반갑습니다": { run: () => this.print("반갑습니다.") },
             "방가": { run: () => this.print("반갑습니다.") },
-        }, (command) => {
+        }, async (command) => {
+
             if (this.changeNameMode === true) {
                 this.store.set("username", command);
+                this.prefix = command;
                 this.print("이름이 등록되었습니다.");
                 this.print(`\n\n[Watson] 안녕 \x1b[36;1m${this.store.get("username")}\x1b[0m, 어떤 걸 도와줄까? 뭘 해야할지 모르겠다면, \x1b[33;1m도움말\x1b[0m을 입력해.`);
                 this.print("명령어를 입력하세요. 도움말 또는 명령어를 보고 싶다면 \x1b[33;1m도움말\x1b[0m을 입력하세요.");
+                this.changeNameMode = false;
                 return true;
             }
+
+            if (this.changeBuyMixMode === true) {
+                const mix = utils.parseEther(command);
+                await KlayswapContract.buyMix(mix);
+                this.changeBuyMixMode = false;
+                return true;
+            }
+
             return false;
         });
 
@@ -163,6 +197,7 @@ export default class Watson extends BaseTerminal {
                 this.print("이름을 입력하세요.");
                 this.changeNameMode = true;
             } else {
+                this.prefix = this.store.get("username")!;
                 this.print(`\n\n[Watson] 안녕 \x1b[36;1m${this.store.get("username")}\x1b[0m, 어떤 걸 도와줄까? 뭘 해야할지 모르겠다면, \x1b[33;1m도움말\x1b[0m을 입력해.`);
                 this.print("명령어를 입력하세요. 도움말 또는 명령어를 보고 싶다면 \x1b[33;1m도움말\x1b[0m을 입력하세요.");
             }

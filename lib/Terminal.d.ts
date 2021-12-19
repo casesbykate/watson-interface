@@ -14,7 +14,7 @@ export default abstract class Terminal extends DomNode {
     private fitAddon;
     private command;
     prefix: string;
-    constructor(bootingMessage: string, welcomeMessage: string, commands: Commands, input: (...commands: string[]) => boolean);
+    constructor(bootingMessage: string, welcomeMessage: string, commands: Commands, input: (...commands: string[]) => Promise<boolean>);
     private get fullPrefix();
     private boot;
     print(message: string): void;

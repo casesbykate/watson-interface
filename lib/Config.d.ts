@@ -1,6 +1,9 @@
 declare const _default: {
     apiHost: string;
     contracts: {
+        Mix: string;
+        Klayswap: string;
+        MixPriceEstimator: string;
         CasesByKate: string;
         CryptoCriminals77: string;
         CryptoCriminals77Minter: string;

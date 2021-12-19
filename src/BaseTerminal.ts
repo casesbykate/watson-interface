@@ -8,7 +8,7 @@ export default abstract class BaseTerminal extends Terminal {
         welcomeMessage: string,
         commands: Commands,
         hiddenCommands: Commands,
-        input: (...commands: string[]) => boolean,
+        input: (...commands: string[]) => Promise<boolean>,
     ) {
         const newCommands = {
             도움말: {
