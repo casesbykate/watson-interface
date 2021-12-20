@@ -202,7 +202,7 @@ export default class Watson extends BaseTerminal {
             const command = commands[0];
 
             if (this.changeNameMode === true) {
-                this.store.set("username", command);
+                this.store.set("username", command, true);
                 this.prefix = command;
                 this.print("이름이 등록되었습니다.");
                 this.print(`\n\n[Watson] 안녕 \x1b[36;1m${this.store.get("username")}\x1b[0m, 어떤 걸 도와줄까? 뭘 해야할지 모르겠다면, \x1b[33;1m도움말\x1b[0m을 입력해.`);
