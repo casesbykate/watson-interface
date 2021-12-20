@@ -19,10 +19,10 @@ export default abstract class Contract extends EventContainer {
     }
 
     public async loadExtWalletContract() {
-        //if (await ExtWallet.loadChainId() !== 8217) {
-        //    this.fireEvent("wrongNetwork");
-        //    console.error("Wrong Network");
-        //} else {
+        if (await ExtWallet.loadChainId() !== 8217) {
+            this.fireEvent("wrongNetwork");
+            console.error("Wrong Network");
+        } else {
             if (await ExtWallet.connected() !== true) {
                 await ExtWallet.connect();
             }
@@ -30,7 +30,7 @@ export default abstract class Contract extends EventContainer {
                 this.walletContract = ExtWallet.createContract(this.address, this.abi);
             }
             return this.walletContract;
-        //}
+        }
     }
 
     protected async runMethod(methodName: string, ...params: any[]) {
