@@ -17,6 +17,6 @@ export default {
         MixPriceEstimator: "0x637ce9D4B6cb790e81110f1a5D9869E32b8Fbde2",
         CasesByKate: "0x0af3f3fe9e822b7a740ca45ce170340b2da6f4cc",
         CryptoCriminals77: "0x281eA55e49e5C9B378aC60A4E2625E42a225Df82",
-        CryptoCriminals77Minter: "0x16653e2F7F2990Eb1910A6E664331116054453aB",
+        CryptoCriminals77Minter: "0x196e229B7D2A0976a8D37eA664623bfC79E93CCE",
     }
 }

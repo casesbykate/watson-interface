@@ -95,6 +95,7 @@ export default class Watson extends BaseTerminal {
                                 this.print("\n검거에 필요한 단서가 적힌 케이스를 모두 모았다고 판단되면, 추적을 시작하세요.");
                                 this.print("추적에는 7개의 케이스가 필요하며, 추적을 할때마다 \x1b[31;1m1 믹스가 의뢰비로 사용\x1b[0m됩니다.");
                                 this.print("추적에 사용할 7개의 케이스 번호를 띄어쓰기로 입력해주세요. 입력 예시 : 33 44 142 334 1234 5678 42");
+                                this.print("첫 2개의 케이스는 보유하고 있어야하며, 나머지 케이스는 타인의 케이스를 입력하셔도 됩니다.");
                                 this.changeMintMode = true;
                             }
                         }
@@ -252,8 +253,8 @@ export default class Watson extends BaseTerminal {
                             this.print("믹스 사용 허락이 필요합니다. 믹스 사용을 허락하시고 추적을 다시 시도해주시기 바랍니다.");
                             await MixContract.approve(CryptoCriminals77MinterContract.address, constants.MaxUint256);
                         } else {
-                            for (const command of commands) {
-                                if (await CasesByKateContract.ownerOf(command) !== address) {
+                            for (const [index, command] of commands.entries()) {
+                                if (index < 2 && await CasesByKateContract.ownerOf(command) !== address) {
                                     this.print(`\x1b[31;1mCASE #${command}를 소유하고 있지 않습니다.\x1b[0m`);
                                     this.changeMintMode = false;
                                     return true;
@@ -266,7 +267,7 @@ export default class Watson extends BaseTerminal {
                             }
                             const key = uuidv4();
                             this.print("추적을 시도합니다.");
-                            await CryptoCriminals77MinterContract.tryMint(key, commands);
+                            await CryptoCriminals77MinterContract.tryMint(key, [commands[0], commands[1]]);
                             this.print("\n추적중...\n");
                             await new Promise<void>((resolve) => {
                                 setTimeout(async () => {
@@ -282,8 +283,9 @@ export default class Watson extends BaseTerminal {
                                     const data = await result.json();
                                     if (data.passed !== true) {
                                         this.print("검거에 \x1b[31;1m실패\x1b[0m하였습니다. \x1b[31;1m범인을 잡기 위한 단서가 부족합니다\x1b[0m");
+                                        this.print("역시 신입은 어쩔 수 없군. 다시 한 번 생각해보게. 단서 속에 답이 있어.");
                                     } else {
-                                        await CryptoCriminals77MinterContract.mint(address, this.cardId, commands, key, data.signature);
+                                        await CryptoCriminals77MinterContract.mint(address, this.cardId, [commands[0], commands[1]], key, data.signature);
                                         const card = (await superagent.get(`https://${Config.apiHost}/77cryptocriminals/${this.cardId}/clues`)).body;
                                         this.print(`'${card.name}' 카드를 획득 했습니다 !`);
                                     }
