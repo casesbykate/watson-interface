@@ -90,7 +90,7 @@ export default class Watson extends BaseTerminal {
                                 this.cardId = cardId;
                                 this.print(`[Watson] '${data.name}' 말이야?`);
                                 for (const clue of data.clues) {
-                                    this.print(`[Watson] ${clue}`);
+                                    this.print(`[Watson] ${clue.replace("\\x1b[31;1m", "\x1b[31;1m").replace("\\x1b[0m", "\x1b[0m")}`);
                                 }
                                 this.print("\n검거에 필요한 단서가 적힌 케이스를 모두 모았다고 판단되면, 추적을 시작하세요.");
                                 this.print("추적에는 7개의 케이스가 필요하며, 추적을 할때마다 \x1b[31;1m1 믹스가 의뢰비로 사용\x1b[0m됩니다.");
@@ -283,7 +283,10 @@ export default class Watson extends BaseTerminal {
                                     const data = await result.json();
                                     if (data.passed !== true) {
                                         this.print("검거에 \x1b[31;1m실패\x1b[0m하였습니다. \x1b[31;1m범인을 잡기 위한 단서가 부족합니다\x1b[0m");
-                                        this.print("역시 신입은 어쩔 수 없군. 다시 한 번 생각해보게. 단서 속에 답이 있어.");
+                                        this.print("역시 신입은 어쩔 수 없군. 다시 한 번 생각해보게. 단서 속에 답이 있어.\n");
+                                        for (const clue of data.clues) {
+                                            this.print(`[Watson] ${clue.replace("\\x1b[31;1m", "\x1b[31;1m").replace("\\x1b[0m", "\x1b[0m")}`);
+                                        }
                                     } else {
                                         await CryptoCriminals77MinterContract.mint(address, this.cardId, [commands[0], commands[1]], key, data.signature);
                                         const card = (await superagent.get(`https://${Config.apiHost}/77cryptocriminals/${this.cardId}/clues`)).body;
